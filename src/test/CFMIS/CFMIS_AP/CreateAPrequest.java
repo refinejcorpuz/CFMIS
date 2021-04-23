@@ -53,17 +53,16 @@ public class CreateAPrequest extends CreateAPrequestBaseTest {
 		DoneBtn();
 	}
 
-	@Test(priority = 5)
-	public void LogoutClaimant() throws Exception {
-		ClaimantLogout();
-
-	}
-
-	public void ReqHeadLogin() throws Exception {
-		ReqHeadCredentials();
-		ClickLogin();
-		ClickRequestForPayment();
-
-	}
+	/*
+	 * @Test(priority = 5) public void LogoutClaimant() throws Exception {
+	 * ClaimantLogout();
+	 * 
+	 * }
+	 * 
+	 * public void ReqHeadLogin() throws Exception { ReqHeadCredentials();
+	 * ClickLogin(); ClickRequestForPayment();
+	 * 
+	 * }
+	 */
 
 }
