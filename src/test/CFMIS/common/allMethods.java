@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -16,15 +17,16 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 public class allMethods {
 
 	protected static int FIND_ELEMENT_TIMEOUT = 1;
-	public static String browser = "chrome";
+	public static String browser = "Firefox";
 	public static WebDriver driver;
 
 	@BeforeTest
 	public void browserUsed() throws Exception {
 
-		if (browser.equals("chrome")) {
-			WebDriverManager.chromedriver().setup();
-			driver = new ChromeDriver();
+		if(browser.equals("Firefox"))
+		{
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
 		}
 
 		driver.manage().window().maximize();

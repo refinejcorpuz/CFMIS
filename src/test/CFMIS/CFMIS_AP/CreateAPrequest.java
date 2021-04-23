@@ -1,34 +1,32 @@
 package CFMIS_AP;
 
-
-
 import org.testng.annotations.Test;
 
 public class CreateAPrequest extends CreateAPrequestBaseTest {
-	
-	@Test (priority = 1)
-	public void LoginClaimant () throws Exception{
-		
+
+	@Test(priority = 1)
+	public void LoginClaimant() throws Exception {
+
 		CredentialsLogin();
 		ClickLogin();
 		ClickRequestForPayment();
-		
+
 	}
-	
-	@Test (priority = 2)
+
+	@Test(priority = 2)
 	public void ClaimsSelection() throws Exception {
-		
-		ClickCreateRequestBtn(); 
+
+		ClickCreateRequestBtn();
 		SelectClaimType();
 		SelectSubClaimType();
-		//SelectRequirementCategory();
-			
+		// SelectRequirementCategory();
+
 		UploadFile();
-		ProceedToDV();	
+		ProceedToDV();
 	}
-	
-	@Test (priority = 3)
-	public void DVFormPage() throws Exception{
+
+	@Test(priority = 3)
+	public void DVFormPage() throws Exception {
 		ReqOffice();
 		DeptOffice();
 		MOP();
@@ -41,10 +39,11 @@ public class CreateAPrequest extends CreateAPrequestBaseTest {
 		ProgramProject();
 		PREB();
 		ParticularAmount();
-		NextBtn();		
+		NextBtn();
 	}
-	@Test (priority = 4)
-	public void BURSFormPage() throws Exception{
+
+	@Test(priority = 4)
+	public void BURSFormPage() throws Exception {
 		BURSaddParticular();
 		BURSResponsibilityCenter();
 		MFO();
@@ -53,17 +52,18 @@ public class CreateAPrequest extends CreateAPrequestBaseTest {
 		SubmitForApprovalBtn();
 		DoneBtn();
 	}
-	@Test (priority = 5)
-	public void LogoutClaimant() throws Exception{
+
+	@Test(priority = 5)
+	public void LogoutClaimant() throws Exception {
 		ClaimantLogout();
-		
+
 	}
-	
-	/*
-	 * public void ReqHeadLogin() throws Exception{ ReqHeadCredentials();
-	 * ClickLogin(); ClickRequestForPayment();
-	 * 
-	 * }
-	 */
+
+	public void ReqHeadLogin() throws Exception {
+		ReqHeadCredentials();
+		ClickLogin();
+		ClickRequestForPayment();
+
+	}
 
 }
