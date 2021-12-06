@@ -1,44 +1,99 @@
 package common;
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.ITestResult;
+import org.testng.Reporter;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterSuite;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
+import com.relevantcodes.extentreports.ExtentReports;
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
+
+
 
 public class allMethods {
-
+	
 	protected static int FIND_ELEMENT_TIMEOUT = 1;
-	public static String browser = "Firefox";
+	public static String browser = "chrome";
 	public static WebDriver driver;
+	ExtentReports extent;
+	ExtentTest ReporterTest;
 
 	@BeforeTest
-	public void browserUsed() throws Exception {
-
-		if(browser.equals("Firefox"))
-		{
-			WebDriverManager.firefoxdriver().setup();
-			driver = new FirefoxDriver();
+	public void startReport() {
+		extent = new ExtentReports(System.getProperty("user.dir") +"/reports/CFMIS.html", true);
+		extent
+		.addSystemInfo("Project", "Philpost - CFMIS")
+		.addSystemInfo("Application","CFMIS")
+		.addSystemInfo("User Name", "JenCorpuz");
+		extent.loadConfig(new File(System.getProperty("user.dir") + "\\extent-config.xml"));
+		
+		ReporterTest=extent.startTest("CFMIS");
+	}
+	
+	@AfterMethod
+	public void getResult(ITestResult result) {
+		if (result.getStatus() == ITestResult.FAILURE) {
+			ReporterTest.log(LogStatus.FAIL, result.getThrowable());
 		}
-
-		driver.manage().window().maximize();
-		driver.get("https://cfmis.multidemos.com/login");
-
+		extent.endTest(ReporterTest);
+		
 	}
-
+	
 	@AfterTest
-	public void browserClose() throws Exception {
-		driver.close();
+	public void endreport() {
+		extent.flush();
+		extent.close();
+		
+	}	
+	
+
+	@AfterSuite
+	public void browserClose() {
+		driver.quit();
 	}
 
+
+	public static void log(String message) {
+		System.out.println(message);
+		Reporter.log(message);
+	}
+
+	public void Takescreenshot() throws IOException {
+		try {
+			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			FileUtils.copyFile(scrFile, new File(
+					"C:\\eclipse-MYworkspace\\CFMIS\\screenshot\\" + getFileName(this.getClass().getSimpleName())));
+		} catch (Exception e) {
+			log("Screenshot is not created.");
+			e.printStackTrace();
+		}
+	}
+
+	public String getFileName(String nameTest) throws IOException {
+		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy_hh.mm.ss");
+		Date date = new Date();
+		return dateFormat.format(date) + "_" + nameTest + ".png";
+	}
 	public static WebElement findElement(String elementId, String locType) {
 		WebElement element = null;
 		try {
@@ -74,9 +129,9 @@ public class allMethods {
 
 		try {
 			driver.findElement(By.xpath(locator)).isDisplayed();
-			System.out.println(ElementDescription + " button was clicked");
+			ReporterTest.log(LogStatus.PASS, ElementDescription + " button was clicked");
 		} catch (Exception e) {
-			System.out.println(ElementDescription + " button was not clicked");
+			ReporterTest.log(LogStatus.FAIL, ElementDescription + " button was not clicked");
 		}
 	}
 
@@ -84,9 +139,9 @@ public class allMethods {
 
 		try {
 			driver.findElement(By.xpath(locator)).isDisplayed();
-			System.out.println(ElementDescription + " is populated in the textbox");
+			ReporterTest.log(LogStatus.PASS, ElementDescription + " is populated in the textbox");
 		} catch (Exception e) {
-			System.out.println(ElementDescription + " is not populated in the textbox");
+			ReporterTest.log(LogStatus.FAIL,ElementDescription + " is not populated in the textbox");
 		}
 	}
 
@@ -94,9 +149,9 @@ public class allMethods {
 
 		try {
 			driver.findElement(By.xpath(locator)).isEnabled();
-			System.out.println(ElementDescription + " was displayed.");
+			ReporterTest.log(LogStatus.PASS, ElementDescription + " was displayed.");
 		} catch (Exception e) {
-			System.out.println(ElementDescription + " was not displayed.");
+			ReporterTest.log(LogStatus.FAIL, ElementDescription + " was not displayed.");
 		}
 
 	}
@@ -105,9 +160,9 @@ public class allMethods {
 
 		try {
 			driver.findElement(By.xpath(locator)).isSelected();
-			System.out.println(ElementDescription + " was selected.");
+			ReporterTest.log(LogStatus.PASS, ElementDescription + " was selected.");
 		} catch (Exception e) {
-			System.out.println(ElementDescription + " was not selected.");
+			ReporterTest.log(LogStatus.FAIL, ElementDescription + " was not selected.");
 		}
 
 	}
@@ -119,5 +174,14 @@ public class allMethods {
 		Action MoveToAcertainObject = builder.moveToElement(object).click().build();
 		MoveToAcertainObject.perform();
 	}
+	
+	public void scrollToElementPlusScrollDown(String string){
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		WebElement element = driver.findElement(By.xpath(string));
+		js.executeScript("arguments[0].scrollIntoView(true);",element);
+		js.executeScript("javascript:window.scrollBy(0,-200)");
+	}
+	
+
 
 }

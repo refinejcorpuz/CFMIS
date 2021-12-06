@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="2" total="2" passed="0" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2021-04-22T20:54:38 SGT" name="Command line suite" finished-at="2021-04-22T20:54:43 SGT" duration-ms="4910">
+    <groups>
+    </groups>
+    <test started-at="2021-04-22T20:54:38 SGT" name="Command line test" finished-at="2021-04-22T20:54:43 SGT" duration-ms="4910">
+      <class name="CFMIS_AP.CreateAPrequestBaseTest">
+        <test-method is-config="true" signature="browserUsed()[pri:0, instance:CFMIS_AP.CreateAPrequestBaseTest@5f058f00]" started-at="2021-04-22T20:54:38 SGT" name="browserUsed" finished-at="2021-04-22T20:54:42 SGT" duration-ms="4345" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- browserUsed -->
+        <test-method is-config="true" signature="browserClose()[pri:0, instance:CFMIS_AP.CreateAPrequestBaseTest@5f058f00]" started-at="2021-04-22T20:54:42 SGT" name="browserClose" finished-at="2021-04-22T20:54:43 SGT" duration-ms="548" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- browserClose -->
+      </class> <!-- CFMIS_AP.CreateAPrequestBaseTest -->
+    </test> <!-- Command line test -->
+  </suite> <!-- Command line suite -->
+</testng-results>

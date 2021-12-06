@@ -2,19 +2,46 @@ package CFMIS_Inventory;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import common.allMethods;
+import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class ItemCategoryBaseTest extends allMethods{
+	
+	public void browserUsed() throws Exception {
+
+		if(browser.equals("chrome"))
+		{
+			WebDriverManager.chromedriver().setup();
+			driver = new ChromeDriver();  
+		}
+		else if(browser.equals("Firefox"))
+		{
+			WebDriverManager.firefoxdriver().setup();
+			driver = new FirefoxDriver();
+		}
+		else if(browser.equals("edge"))
+		{
+			WebDriverManager.edgedriver().setup();
+			driver = new EdgeDriver();
+		}
+
+		driver.manage().window().maximize();
+		driver.get("https://cfmis.multidemos.com/login");
+	}
+	
 	
 	public void MISAdminCredentialsLogin() throws InterruptedException {
 
 		String[] t = new String[2];
 
 		t[0] = "tiffa@email.com";
-		t[1] = "install@123";
+		t[1] = "install@1234";
 
 		String usrnme = "//body/div[@id='root']/div[4]/div[1]/div[1]/div[1]/form[1]/div[1]/div[1]/input[1]";
 		String psswrd = "//body/div[@id='root']/div[4]/div[1]/div[1]/div[1]/form[1]/div[2]/div[1]/input[1]";
@@ -76,7 +103,7 @@ public class ItemCategoryBaseTest extends allMethods{
 	}
 
 	public void ItemCategNameCode() throws Exception {
-		// TIN, Payee, Address
+		
 		String[] t = new String[2];
 
 		t[0] = "IC 01";
